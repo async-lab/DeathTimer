@@ -1,10 +1,11 @@
 name: DeathTimer
-version: '${project.version}'
-main: com.asynclab.github.xiaomo.deathtimer
+version: '${plugin_version}'
+main: ${plugin_group}.DeathTimer
 api-version: '1.20'
 load: STARTUP
-softdepend: [PlaceholderAPI]
-authors: [YokeXM]
+softdepend: [ PlaceholderAPI ]
+authors: [ ${ plugin_authors } ]
+description: ${plugin_description}
 commands:
   DeathTimer:
     description: "Manager Command"
@@ -14,5 +15,6 @@ commands:
   alive:
     description: "Respawn player"
 permissions:
-  deathtimer.ok:
-    description: "/alive ok"
+  ${plugin_group}.reload:
+    description: "/dt reload"
+    default: op

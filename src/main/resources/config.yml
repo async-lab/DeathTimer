@@ -1,5 +1,7 @@
+#语言文件（在locals目录下）
+lang: "zh_CN"
 #死亡后计时
-time: 10
+cooldown: 10
 #时间单位: HOUR MINUTE SECOND
 unit: "SECOND"
 #是否启用复活模式(集成)
