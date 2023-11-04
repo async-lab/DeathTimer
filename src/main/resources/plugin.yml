@@ -13,3 +13,6 @@ commands:
     usage: "§c/dt reload"
   alive:
     description: "Respawn player"
+permissions:
+  deathtimer.ok:
+    description: "/alive ok"

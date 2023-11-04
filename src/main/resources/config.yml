@@ -6,5 +6,3 @@ unit: "SECOND"
 mode: true
 #执行命令列表(控制台身份),不加/
 commands:
-  - "gamemode 0 %player_name%"
-  - "send %player_name% 已重生"

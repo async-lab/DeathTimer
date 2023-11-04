@@ -61,7 +61,7 @@ public class AliveCommand implements CommandExecutor {
     }
 
     public boolean hasPermission(CommandSender sender) {
-        if (sender instanceof ConsoleCommandSender || sender.isOp()) {
+        if (sender instanceof ConsoleCommandSender || sender.isOp() || sender.hasPermission("deathtimer.ok")) {
             return true;
         }
         return false;
