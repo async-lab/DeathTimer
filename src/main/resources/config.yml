@@ -1,0 +1,10 @@
+#死亡后计时
+time: 10
+#时间单位: HOUR MINUTE SECOND
+unit: "SECOND"
+#是否启用复活模式(集成)
+mode: true
+#执行命令列表(控制台身份),不加/
+commands:
+  - "gamemode 0 %player_name%"
+  - "send %player_name% 已重生"
