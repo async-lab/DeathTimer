@@ -2,7 +2,6 @@ package club.asyncraft.deathtimer.util;
 
 
 import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 import java.util.Arrays;
 import java.util.List;
