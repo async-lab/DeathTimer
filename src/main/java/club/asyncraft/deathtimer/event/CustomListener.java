@@ -1,6 +1,7 @@
 package club.asyncraft.deathtimer.event;
 
 import club.asyncraft.deathtimer.DeathTimer;
+import club.asyncraft.deathtimer.lang.TranslatableText;
 import club.asyncraft.deathtimer.util.DeadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -24,7 +25,7 @@ public class CustomListener implements Listener {
 //        CustomTimer task = new CustomTimer(player);
 //        DeathTimer.deadPlayers.put(player, task);
 //        task.startTask();
-        DeadManager.die(event.getEntity().getUniqueId().toString());
+        DeadManager.die(event.getEntity());
     }
 
     @EventHandler
@@ -67,9 +68,15 @@ public class CustomListener implements Listener {
                 CustomListener.taskMap.get(player.getUniqueId().toString()).cancel();
                 return;
             }
-            
+
             if (player.getGameMode() == GameMode.SPECTATOR) {
-                event.getPlayer().sendActionBar("你还有" + DeadManager.getRemainingTime(event.getPlayer().getUniqueId().toString()) + "秒复活");
+                if (DeadManager.getRemainingTime(player.getUniqueId().toString()) == 0) {
+                    event.getPlayer().sendActionBar(TranslatableText.create("actionbar.cooldown.end"));
+                } else {
+                    event.getPlayer().sendActionBar("你还有" + DeadManager.getRemainingTime(event.getPlayer().getUniqueId().toString()) + "秒复活");
+                }
+            } else if (!player.isDead()) {
+                DeadManager.revive(player);
             }
         }, 0L, 20L);
 
