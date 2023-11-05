@@ -9,6 +9,7 @@ Support PlaceHolderAPI.
 + `/dt`or`/deathtimer`
     + `/dt reload`
     + `/dt revive`
+    + `/dt clear <player>`
 
 ## Configs
 
