@@ -1,5 +1,7 @@
 package club.asyncraft.deathtimer.util;
 
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -52,6 +54,10 @@ public class PermissionWrapper extends Permission {
     public PermissionWrapper addParentChain(String name, boolean value) {
         super.addParent(name, value);
         return this;
+    }
+
+    public boolean hasPermission(Permissible permissible) {
+        return Bukkit.getPluginManager().getPermission(this.getName()) == null || permissible.hasPermission(this.getName());
     }
 
 }
