@@ -3,6 +3,7 @@ package club.asyncraft.deathtimer.util;
 import club.asyncraft.deathtimer.DeathTimer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +13,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class DeadManager {
-
-    public static boolean check(String uuid) {
-        return DeadManager.getRemainingTime(uuid) == 0;
-    }
 
     public static int getRemainingTime(String uuid) {
         return (int) DeadManager.handle(map -> {
@@ -31,18 +28,29 @@ public class DeadManager {
         });
     }
 
-    public static void die(String uuid) {
+    public static void die(Player player) {
         DeadManager.handle(map -> {
-            map.put(uuid, DeadManager.getTimeNow());
+            map.put(player.getUniqueId().toString(), DeadManager.getTimeNow());
             return true;
         });
     }
 
-    public static void revive(String uuid) {
+    public static void revive(Player player) {
         DeadManager.handle(map -> {
-            map.remove(uuid);
+            map.remove(player.getUniqueId().toString());
             return true;
         });
+    }
+
+    public static void clear(Player player) {
+        DeadManager.handle(map -> {
+            map.put(player.getUniqueId().toString(), 0);
+            return true;
+        });
+    }
+
+    public static boolean isDead(Player player) {
+        return (boolean) DeadManager.handle(map -> map.containsKey(player.getUniqueId().toString()));
     }
 
     public static Object handle(Function<Map<String, Integer>, Object> function) {
