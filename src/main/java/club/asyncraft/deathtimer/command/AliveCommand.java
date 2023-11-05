@@ -5,11 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class AliveCommand implements CommandExecutor {
 
-    public static List<String> canRespawnPlayers;
+//    public static List<String> canRespawnPlayers;
 
     /*
      * /alive指令

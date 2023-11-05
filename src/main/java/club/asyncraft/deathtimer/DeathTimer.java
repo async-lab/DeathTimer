@@ -1,6 +1,5 @@
 package club.asyncraft.deathtimer;
 
-import club.asyncraft.deathtimer.command.AliveCommand;
 import club.asyncraft.deathtimer.command.MainCommand;
 import club.asyncraft.deathtimer.event.CustomListener;
 import club.asyncraft.deathtimer.lang.TranslatableText;
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class DeathTimer extends JavaPlugin {
@@ -25,21 +23,19 @@ public final class DeathTimer extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getLogger().info("Loading");
         DeathTimer.instance = this;
 
-        AliveCommand.canRespawnPlayers = new ArrayList<>();
         if (!initConfig()) {
+            DeathTimer.disable();
             return;
         }
 
-
-        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+        if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             this.hasPapi = true;
-            getLogger().info("PlaceholderAPI Hooked");
+            this.getLogger().info(TranslatableText.create("debug.placeholder_api.hooked"));
         } else {
             this.hasPapi = false;
-            getLogger().info("PlaceholderAPI Not Found");
+            this.getLogger().info(TranslatableText.create("debug.placeholder_api.not_found"));
         }
 
         for (Permission permission : Reference.plugin_permissions) {
@@ -47,14 +43,15 @@ public final class DeathTimer extends JavaPlugin {
         }
 
         this.getServer().getPluginCommand("DeathTimer").setExecutor(new MainCommand());
+        this.getServer().getPluginCommand("DeathTimer").setTabCompleter(new MainCommand());
+
         this.getServer().getPluginManager().registerEvents(new CustomListener(), instance);
-        this.getLogger().info("Loaded");
+        this.getLogger().info(TranslatableText.create("debug.loaded"));
     }
 
     @Override
     public void onDisable() {
-        this.getLogger().info("Disabling");
-        this.getServer().getPluginManager().disablePlugin(this);
+        this.getLogger().info(TranslatableText.create("debug.disabled"));
     }
 
     public boolean initConfig() {
@@ -66,13 +63,13 @@ public final class DeathTimer extends JavaPlugin {
             //检查config中配置的lang是否存在
             String configLang = this.getConfig().getString("lang");
 
+            //初始化i18n
             TranslatableText.init(configLang);
 
-            String unit = this.getConfig().getString("unit");
-            this.timeUnit = unit;
+            this.timeUnit = this.getConfig().getString("unit");
             int time = this.getConfig().getInt("cooldown");
 
-            switch (unit.toUpperCase()) {
+            switch (this.timeUnit.toUpperCase()) {
                 case "MINUTE":
                     this.cooldown = time * 60;
                     break;
@@ -83,21 +80,22 @@ public final class DeathTimer extends JavaPlugin {
                     this.cooldown = time;
                     break;
                 default:
-                    this.getLogger().info("配置文件错误,卸载插件...");
-                    this.getServer().getScheduler().cancelTasks(this);
-                    Bukkit.getPluginManager().disablePlugin(this);
-                    return false;
+                    Bukkit.getLogger().info(TranslatableText.create("debug.config_error"));
+                    Bukkit.getScheduler().cancelTasks(this);
+                    throw new RuntimeException("Config error");
             }
 
             this.commands = getConfig().getStringList("commands");
-
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            this.getLogger().info("Plugin is disabled.");
-            this.getServer().getPluginManager().disablePlugin(this);
             return false;
         }
+
+        return true;
+    }
+
+    public static void disable() {
+        Bukkit.getPluginManager().disablePlugin(DeathTimer.instance);
     }
 
 }
