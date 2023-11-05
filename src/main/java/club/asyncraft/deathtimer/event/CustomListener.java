@@ -25,7 +25,9 @@ public class CustomListener implements Listener {
 //        CustomTimer task = new CustomTimer(player);
 //        DeathTimer.deadPlayers.put(player, task);
 //        task.startTask();
-        DeadManager.die(event.getEntity());
+        if (event.getEntity().getGameMode() != GameMode.SPECTATOR) {
+            DeadManager.die(event.getEntity());
+        }
     }
 
     @EventHandler
