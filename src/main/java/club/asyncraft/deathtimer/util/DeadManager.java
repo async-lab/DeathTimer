@@ -19,8 +19,8 @@ public class DeadManager {
             if (map.containsKey(uuid)) {
                 int deathDate = map.get(uuid);
                 int nowDate = DeadManager.getTimeNow();
-                if (nowDate - deathDate < DeathTimer.cooldown) {
-                    return DeathTimer.cooldown - (nowDate - deathDate);
+                if (nowDate - deathDate < DeathTimer.instance.cooldown) {
+                    return DeathTimer.instance.cooldown - (nowDate - deathDate);
                 }
             }
 
