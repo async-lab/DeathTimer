@@ -6,29 +6,27 @@ import club.asyncraft.deathtimer.event.CustomListener;
 import club.asyncraft.deathtimer.lang.TranslatableText;
 import club.asyncraft.deathtimer.util.Reference;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class DeathTimer extends JavaPlugin {
 
     public static DeathTimer instance;
 
-    public static int cooldown;
-    public static List<String> commands;
+    public int cooldown;
+    public List<String> commands;
 
-    public static String timeUnit;
-    public static boolean hasPapi;
+    public String timeUnit;
+    public boolean hasPapi;
 
 
     @Override
     public void onEnable() {
         this.getLogger().info("Loading");
-        instance = this;
+        DeathTimer.instance = this;
 
         AliveCommand.canRespawnPlayers = new ArrayList<>();
         if (!initConfig()) {
@@ -37,10 +35,10 @@ public final class DeathTimer extends JavaPlugin {
 
 
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            hasPapi = true;
+            this.hasPapi = true;
             getLogger().info("PlaceholderAPI Hooked");
         } else {
-            hasPapi = false;
+            this.hasPapi = false;
             getLogger().info("PlaceholderAPI Not Found");
         }
 
@@ -63,6 +61,7 @@ public final class DeathTimer extends JavaPlugin {
         try {
             this.getConfig().options().copyDefaults(true);
             this.saveDefaultConfig();
+            this.reloadConfig();
 
             //检查config中配置的lang是否存在
             String configLang = this.getConfig().getString("lang");
@@ -70,18 +69,18 @@ public final class DeathTimer extends JavaPlugin {
             TranslatableText.init(configLang);
 
             String unit = this.getConfig().getString("unit");
-            DeathTimer.timeUnit = unit;
+            this.timeUnit = unit;
             int time = this.getConfig().getInt("cooldown");
 
             switch (unit.toUpperCase()) {
                 case "MINUTE":
-                    cooldown = time * 60;
+                    this.cooldown = time * 60;
                     break;
                 case "HOUR":
-                    cooldown = time * 60 * 60;
+                    this.cooldown = time * 60 * 60;
                     break;
                 case "SECOND":
-                    cooldown = time;
+                    this.cooldown = time;
                     break;
                 default:
                     this.getLogger().info("配置文件错误,卸载插件...");
@@ -90,7 +89,7 @@ public final class DeathTimer extends JavaPlugin {
                     return false;
             }
 
-            commands = getConfig().getStringList("commands");
+            this.commands = getConfig().getStringList("commands");
 
             return true;
         } catch (Exception e) {
