@@ -29,11 +29,14 @@ unit: "SECOND"
 command:
   without_permission: "[DeathTimer] §c你没有权限!"
   non_console: "[DeathTimer] §c控制台无法使用此命令!"
+  non_player: "[DeathTimer] §c找不到此玩家!"
   reload:
     reloaded: "[DeathTimer] 插件已重置"
   revive:
     revived: "[DeathTimer] 已复活"
     time_left: "[DeathTimer] §c时候未到..."
+  clear:
+    cleared: "[DeathTimer] 已清除冷却时间"
 actionbar:
   cooldown:
     # elapse: ""
