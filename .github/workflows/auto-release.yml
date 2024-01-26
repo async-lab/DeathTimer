@@ -24,4 +24,3 @@ jobs:
         env:
           GHR_REPLACE: true
           GHR_PATH: build/libs
-          GITHUB_TOKEN: ${{ secrets.PAT }}
