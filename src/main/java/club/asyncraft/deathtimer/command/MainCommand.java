@@ -3,7 +3,6 @@ package club.asyncraft.deathtimer.command;
 import club.asyncraft.deathtimer.DeathTimer;
 import club.asyncraft.deathtimer.lang.TranslatableText;
 import club.asyncraft.deathtimer.util.DeadManager;
-import club.asyncraft.deathtimer.util.PermissionWrapper;
 import club.asyncraft.deathtimer.util.Reference;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -11,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -98,8 +98,11 @@ public class MainCommand implements TabExecutor {
         if (args.length == 1) {
             MainCommand.children.stream()
                     .filter(
-                            child ->
-                                    child.startsWith(args[0].toLowerCase()) && new PermissionWrapper(Reference.plugin_group + "." + child).hasPermission(commandSender)
+                            child -> {
+                                String permissionName = Reference.plugin_group + "." + child;
+                                Permission permission = Bukkit.getServer().getPluginManager().getPermission(permissionName);
+                                return child.startsWith(args[0].toLowerCase()) && (permission == null || commandSender.hasPermission(permission));
+                            }
                     ).forEach(hint::add);
         } else switch (args[0].toLowerCase()) {
             case "clear":
