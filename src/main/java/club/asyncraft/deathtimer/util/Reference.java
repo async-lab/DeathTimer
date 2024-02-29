@@ -12,9 +12,7 @@ public class Reference {
 
     public static String plugin_group = "club.asyncraft.deathtimer";
 
-    public static String[] plugin_langs = {
-            "zh_CN"
-    };
+    public static List<String> plugin_langs = Arrays.asList("zh_CN");
 
     public static List<Permission> plugin_permissions = Arrays.asList(
 //            new PermissionWrapper(plugin_group + ".reload").setDefaultChain(PermissionDefault.OP)

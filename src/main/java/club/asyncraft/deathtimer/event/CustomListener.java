@@ -1,7 +1,6 @@
 package club.asyncraft.deathtimer.event;
 
 import club.asyncraft.deathtimer.DeathTimer;
-import club.asyncraft.deathtimer.lang.TranslatableText;
 import club.asyncraft.deathtimer.util.DeadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -73,7 +72,7 @@ public class CustomListener implements Listener {
 
             if (player.getGameMode() == GameMode.SPECTATOR) {
                 if (DeadManager.getRemainingTime(player.getUniqueId().toString()) == 0) {
-                    event.getPlayer().sendActionBar(TranslatableText.create("actionbar.cooldown.end"));
+                    event.getPlayer().sendActionBar(DeathTimer.translatableContext.translate("actionbar.cooldown.end"));
                 } else {
                     event.getPlayer().sendActionBar("你还有" + DeadManager.getRemainingTime(event.getPlayer().getUniqueId().toString()) + "秒复活");
                 }
