@@ -1,4 +1,4 @@
-name: Release
+name: publish
 
 on:
   push:
@@ -6,7 +6,10 @@ on:
       - 'v*'
 
 jobs:
-  build_and_release:
+  publish:
+    concurrency:
+      group: nightly
+      cancel-in-progress: true
     runs-on: ubuntu-latest
 
     steps:
