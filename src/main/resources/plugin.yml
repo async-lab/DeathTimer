@@ -4,6 +4,7 @@ main: ${plugin_group}.DeathTimer
 api-version: '1.20'
 load: STARTUP
 softdepend: [ PlaceholderAPI ]
+depend: [ PaperCutter ]
 authors: [ ${ plugin_authors } ]
 description: ${plugin_description}
 commands:
