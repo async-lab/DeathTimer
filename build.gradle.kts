@@ -34,7 +34,7 @@ repositories {
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.4")
-    compileOnly("com.github.Async-Lab:PaperCutter:main-SNAPSHOT")
+    compileOnly("com.github.Async-Lab:PaperCutter:1.0.0")
 }
 
 java {
@@ -44,19 +44,19 @@ java {
 tasks.jar {
     manifest {
         attributes(
-                "Implementation-Title" to pluginName,
-                "Implementation-Version" to pluginVersion
+            "Implementation-Title" to pluginName,
+            "Implementation-Version" to pluginVersion
         )
     }
 }
 
 tasks.processResources {
     val props = mapOf(
-            "plugin_name" to pluginName,
-            "plugin_group" to pluginGroup,
-            "plugin_version" to pluginVersion,
-            "plugin_authors" to pluginAuthors,
-            "plugin_description" to pluginDescription
+        "plugin_name" to pluginName,
+        "plugin_group" to pluginGroup,
+        "plugin_version" to pluginVersion,
+        "plugin_authors" to pluginAuthors,
+        "plugin_description" to pluginDescription
     )
     inputs.properties(props)
     filteringCharset = "UTF-8"
